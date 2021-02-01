@@ -2,9 +2,7 @@
 # @Author: David Hanson
 # @Date:   2021-01-31 14:16:27
 # @Last Modified by:   David Hanson
-# @Last Modified time: 2021-01-31 19:16:19
-
-import pdb
+# @Last Modified time: 2021-01-31 19:25:45
 
 # recursive approach:
 def fibonacci_recursive(index):
