@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: davidhansonc
 # @Date:   2021-01-27 15:58:39
-# @Last Modified by:   davidhansonc
-# @Last Modified time: 2021-01-28 10:37:25
+# @Last Modified by:   David Hanson
+# @Last Modified time: 2021-01-31 20:56:35
 import pdb
 
 class Node():
@@ -81,17 +81,21 @@ class BinarySearchTree():
             parent_node = None
             current_node = self.root
             last_dir_taken = ""
+            parent_of_node_found = None
+            node_found = None
             while True:
-                if value > current_node.value:
+                if value > current_node.value and node_found == None:
                     parent_node = current_node
                     current_node = current_node.right
                     last_dir_taken = "right"
-                elif value < current_node.value:
+                elif value < current_node.value and node_found == None:
                     parent_node = current_node
-                    current_node  = current_node.left
+                    current_node = current_node.left
                     last_dir_taken = "left"
 
                 elif value == current_node.value:
+                    parent_of_node_found = parent_node
+                    node_found = current_nod                                        e
                     # This statement deletes the node if it is a leaf
                     if current_node.right == None and current_node.left == None:
                         if last_dir_taken == "right":
@@ -99,11 +103,28 @@ class BinarySearchTree():
                         elif last_dir_taken == "left":
                             parent_node.left = None
                         return
-                    # This statement deletes the node if it is not a leaf...
+                    # This statement deletes the node if it is not a leaf and only left child exists.
+                    # Left child then replaces the node begin deleted.
+                    elif current_node.right == None and last_dir_taken = "right":
+                        parent_node.right = current_node.left
+                        return
+                    elif current_node.right == None and last_dir_taken = "left":
+                        parent_node.left = current_node.left
+                        return
+                    # Case when right child exists...
+                    else:
+                        parent_node = current_node
+                        current_node = current_node.right
+                        last_dir_taken = "right"
+                # elif node_found:
+
+
+    def traverse(self):
+        pass
 
 
 my_tree = BinarySearchTree()
-my_tree.insert(9)
+my_tree.insert(49)
 my_tree.insert(4)
 my_tree.insert(2)
 my_tree.insert(2)
