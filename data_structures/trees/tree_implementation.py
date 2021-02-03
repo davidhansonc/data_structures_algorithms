@@ -115,21 +115,16 @@ class BinarySearchTree():
                             parent_node.right = None
                         elif last_dir_taken == "left":
                             parent_node.left = None
-                        return
                     # Node to delete has only left children
                     elif current_node.right == None and last_dir_taken == "right":
                         parent_node.right = current_node.left
-                        return
                     elif current_node.right == None and last_dir_taken == "left":
                         parent_node.left = current_node.left
-                        return
                     # Node to delete has no left grandchildren
                     elif current_node.right.left == None and last_dir_taken == "right":
                         parent_node.right = current_node.right
-                        return
                     elif current_node.right.left == None and last_dir_taken == "left":
                         parent_node.left = current_node.right
-                        return
                     # Node to delete has a left grandchild
                     elif current_node.right.left and last_dir_taken == "right":
                         special_node = current_node.right.left
@@ -137,7 +132,7 @@ class BinarySearchTree():
                         special_node.right = current_node.right
                         special_node.left = current_node.left
                         current_node.right.left = None
-                        return
+                    return
 
 
 
