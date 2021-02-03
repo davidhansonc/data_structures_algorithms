@@ -3,8 +3,6 @@
 # @Date:   2021-01-27 15:58:39
 # @Last Modified by:   David Hanson
 # @Last Modified time: 2021-01-31 20:56:35
-import pdb
-
 class Node():
 
     def __init__(self, value):
@@ -27,10 +25,25 @@ class BinarySearchTree():
     def __init__(self):
         self.root = None
         self.node_number = 0
-
+    
 
     def __str__(self):
-        pass
+        return str(self._traverse(self.root))
+
+
+    def _traverse(self, node):
+        tree = {
+            'value': node.value
+        }
+        if node.right:
+            tree['right node'] = self._traverse(node.right)
+        else:
+            tree['right node'] = 'None'
+        if node.left:
+            tree['left node'] = self._traverse(node.left)
+        else:
+            tree['left node'] = 'None'
+        return tree
 
 
     def insert(self, value):
@@ -73,6 +86,7 @@ class BinarySearchTree():
                 return "item not found"
 
 
+'''
     def remove(self, value):
         if self.root == None:
             return "tree is empty"
@@ -117,17 +131,11 @@ class BinarySearchTree():
                         current_node = current_node.right
                         last_dir_taken = "right"
                 # elif node_found:
+'''
 
 
-    def traverse(self):
-        pass
-
-
-my_tree = BinarySearchTree()
-my_tree.insert(49)
-my_tree.insert(4)
-my_tree.insert(2)
-my_tree.insert(2)
-my_tree.insert(10)
-my_tree.insert(3)
-# my_tree.remove(3)
+tree = BinarySearchTree()
+tree.insert(6)
+tree.insert(4)
+tree.insert(10)
+print(tree)
