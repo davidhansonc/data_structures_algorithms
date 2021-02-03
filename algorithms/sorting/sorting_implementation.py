@@ -1,4 +1,6 @@
-numbers = [5,3,86,8,43,5]
+# numbers = [5,3,86,8,86,43,3,5]
+numbers = [5,9,3,10,45,2,0]
+# numbers = [5,6,7,8,9]
 
 def bubble_sort(num_list):
     sorting = True
@@ -14,8 +16,8 @@ def bubble_sort(num_list):
 
 
 def selection_sort(num_list):
+    smallest_num = max(num_list)
     for idx in range(len(num_list)):
-        smallest_num = max(num_list)
         for num in num_list[idx:]:
             if num < smallest_num:
                 smallest_num = num
@@ -24,29 +26,25 @@ def selection_sort(num_list):
 
 
 def insertion_sort(num_list):
-    sorted_list = []
-    for num in num_list:
-        print(sorted_list)
-        if sorted_list == []:
-            sorted_list.append(num)
+    count = 0
+    for index, num in enumerate(num_list):
+        count += 1
+        sorted_list = num_list[:index]
+        if index == 0 or num > max(sorted_list):
+            continue
+        elif num < min(sorted_list):
+            temp = num_list.pop(index)
+            num_list.insert(0, temp)
         else:
-            flag = True
-            minimize = 10000
             for idx, value in enumerate(sorted_list):
-                if num > value:
-                    flag = False
-                    # if idx < len(sorted_list)-1:
-                    #     second_half = sorted_list[idx:]
-                    #     sorted_list = sorted_list[:idx-1].append(num)
-                    #     sorted_list.extend(second_half)
-                    # else:
-                    #     sorted_list.append(num)
-            if flag:
-                temp = sorted_list[:]
-                sorted_list = [num]
-                sorted_list.extend(temp)
-    return sorted_list
-
+                count += 1
+                if num > sorted_list[idx] and num < sorted_list[idx+1]:
+                    temp = num_list.pop(index)
+                    num_list.insert(idx+1, num)
+                elif num == value:
+                    temp = num_list.pop(index)
+                    num_list.insert(idx+1, num)
+    return (f'{num_list} \n Number of comparisons: {count}')
 
 
 # print(bubble_sort(numbers))
