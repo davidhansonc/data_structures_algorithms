@@ -31,19 +31,19 @@ class BinarySearchTree():
         if self.root == None:
             return 'Empty Tree'
         else:
-            return str(self._traverse(self.root))
+            return str(self.__traverse(self.root))
 
 
-    def _traverse(self, node):
+    def __traverse(self, node):
         tree = {
             'value': node.value
         }
         if node.right:
-            tree['right node'] = self._traverse(node.right)
+            tree['right node'] = self.__traverse(node.right)
         else:
             tree['right node'] = 'None'
         if node.left:
-            tree['left node'] = self._traverse(node.left)
+            tree['left node'] = self.__traverse(node.left)
         else:
             tree['left node'] = 'None'
         return tree
@@ -90,50 +90,54 @@ class BinarySearchTree():
 
     
     def remove(self, value):
-        # Deletes root node when there are no children
-        if self.root.left == None and self.root.right == None:
-            self.root = None
-        else:
-            parent_node = None
-            current_node = self.root
-            last_dir_taken = ""
-            while True:
-                # The following two statements traverse through the tree to locate node
-                if value > current_node.value: 
-                    parent_node = current_node
-                    current_node = current_node.right
-                    last_dir_taken = "right"
-                elif value < current_node.value:
-                    parent_node = current_node
-                    current_node = current_node.left
-                    last_dir_taken = "left"
-                # These statements deal with the removal once node is found
-                elif value == current_node.value:
-                    # Node to delete is a leaf
-                    if current_node.right == None and current_node.left == None:
-                        if last_dir_taken == "right":
-                            parent_node.right = None
-                        elif last_dir_taken == "left":
-                            parent_node.left = None
-                    # Node to delete has only left children
-                    elif current_node.right == None and last_dir_taken == "right":
-                        parent_node.right = current_node.left
-                    elif current_node.right == None and last_dir_taken == "left":
-                        parent_node.left = current_node.left
-                    # Node to delete has no left grandchildren
-                    elif current_node.right.left == None and last_dir_taken == "right":
-                        parent_node.right = current_node.right
-                    elif current_node.right.left == None and last_dir_taken == "left":
-                        parent_node.left = current_node.right
-                    # Node to delete has a left grandchild
-                    elif current_node.right.left and last_dir_taken == "right":
-                        special_node = current_node.right.left
-                        parent_node.right = special_node
-                        special_node.right = current_node.right
-                        special_node.left = current_node.left
-                        current_node.right.left = None
-                    return
+        parent_node = None
+        current_node = self.root
+        last_direction_taken = ""
+        while True:
+            # Deletes root node when there are no children
+            if self.root.left == None and self.root.right == None:
+                self.root = None
+                return
+            # The following two statements traverse through the tree to locate node
+            elif value > current_node.value: 
+                parent_node = current_node
+                current_node = current_node.right
+                last_direction_taken = "right"
+            elif value < current_node.value:
+                parent_node = current_node
+                current_node = current_node.left
+                last_direction_taken = "left"
+            # These statements deal with the removal once node is found
+            elif value == current_node.value:
+                self.__node_removal(parent_node, current_node, last_direction_taken)
+                return
 
+
+    def __node_removal(self, parent_node, current_node, prev_direction):
+        # Node to delete is a leaf
+        if current_node.right == None and current_node.left == None:
+            if prev_direction == "right":
+                parent_node.right = None
+            elif prev_direction == "left":
+                parent_node.left = None
+        # Node to delete has only left children
+        elif current_node.right == None and prev_direction == "right":
+            parent_node.right = current_node.left
+        elif current_node.right == None and prev_direction == "left":
+            parent_node.left = current_node.left
+        # Node to delete has no left grandchildren
+        elif current_node.right.left == None and prev_direction == "right":
+            parent_node.right = current_node.right
+        elif current_node.right.left == None and prev_direction == "left":
+            parent_node.left = current_node.right
+        # Node to delete has a left grandchild
+        elif current_node.right.left and prev_direction == "right":
+            special_node = current_node.right.left
+            parent_node.right = special_node
+            special_node.right = current_node.right
+            special_node.left = current_node.left
+            current_node.right.left = None
+        return
 
 
 
