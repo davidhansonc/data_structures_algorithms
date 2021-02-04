@@ -54,36 +54,44 @@ class BinarySearchTree():
         if self.root == None:
             self.root = new_node
         else:
-            traverse = self.root
-            while traverse.left != new_node and traverse.right != new_node:
-                if value > traverse.value:
-                    if traverse.right == None:
-                        traverse.right = new_node
-                    else:
-                        traverse = traverse.right
-                elif value < traverse.value:
-                    if traverse.left == None:
-                        traverse.left = new_node
-                    else:
-                        traverse = traverse.left
-                elif value == traverse.value:
-                    return
+            self.__traverse_to_insert(new_node, self.root)
         self.node_number += 1
         return
+
+
+    def __traverse_to_insert(self, node_to_insert, origin_node):
+        traverse = origin_node
+        while traverse.left != node_to_insert and traverse.right != node_to_insert:
+            if node_to_insert.value > traverse.value:
+                if traverse.right == None:
+                    traverse.right = node_to_insert
+                else:
+                    traverse = traverse.right
+            elif node_to_insert.value < traverse.value:
+                if traverse.left == None:
+                    traverse.left = node_to_insert
+                else:
+                    traverse = traverse.left
+            elif value == traverse.value:
+                return
 
 
     def lookup(self, value):
         if self.root == None:
             return "tree is empty"
         else:
-            traverse = self.root
+            return self.__traverse_to_lookup(value, self.root)
+
+
+    def __traverse_to_lookup(self, value_to_add, origin_node):
+            traverse = origin_node
             try:
                 while True:
-                    if value > traverse.value:
+                    if value_to_add > traverse.value:
                         traverse = traverse.right
-                    elif value < traverse.value:
+                    elif value_to_add < traverse.value:
                         traverse  = traverse.left
-                    elif value == traverse.value:
+                    elif value_to_add == traverse.value:
                         return traverse
             except AttributeError:
                 return "item not found"
@@ -149,6 +157,8 @@ tree.insert(14)
 tree.insert(20)
 tree.insert(18)
 tree.insert(22)
+print(tree.lookup(14))
+print('\n')
 print(tree)
 tree.remove(15)
 print('\n')
