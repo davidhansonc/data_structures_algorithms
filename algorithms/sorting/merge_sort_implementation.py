@@ -14,12 +14,12 @@ def merge_sort(number_list):
 def sort_return(first, second):
     if type(first) is not int and type(second) is not int:
         sorted_list = []
-        return compile_sorted_list(sorted_list, first, second)
+        return compile_pieces(sorted_list, first, second)
     else:
         return [min(first, second), max(first, second)]
 
 
-def compile_sorted_list(sorted_list, first_half, second_half):
+def compile_pieces(sorted_list, first_half, second_half):
     index_i, index_j = 0, 0
     while index_i < len(first_half) and index_j < len(second_half):
         first_num = first_half[index_i]
