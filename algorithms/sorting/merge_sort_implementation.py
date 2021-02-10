@@ -11,24 +11,29 @@ def merge_sort(number_list):
         return single_item
     
 
-def sort_return(first_half, second_half):
-    if type(first_half) is not int:
+def sort_return(first, second):
+    if type(first) is not int and type(second) is not int:
         sorted_list = []
-        index_i, index_j = 0, 0
-        while index_i < len(first_half) and index_j < len(second_half):
-            first_num = first_half[index_i]
-            second_num = second_half[index_j]
-            if first_num < second_num:
-                index_i += 1
-                sorted_list.append(first_num)
-            else:
-                index_j += 1
-                sorted_list.append(second_num)
-        sorted_list.extend(min(first_half[index_i:], second_half[index_j:]))
-        sorted_list.extend(max(first_half[index_i:], second_half[index_j:]))
-        return sorted_list
+        return compile_sorted_list(sorted_list, first, second)
     else:
-        return [min(first_half, second_half), max(first_half, second_half)]
+        return [min(first, second), max(first, second)]
+
+
+def compile_sorted_list(sorted_list, first_half, second_half):
+    index_i, index_j = 0, 0
+    while index_i < len(first_half) and index_j < len(second_half):
+        first_num = first_half[index_i]
+        second_num = second_half[index_j]
+        if first_num < second_num:
+            index_i += 1
+            sorted_list.append(first_num)
+        else:
+            index_j += 1
+            sorted_list.append(second_num)
+    sorted_list.extend(min(first_half[index_i:], second_half[index_j:]))
+    sorted_list.extend(max(first_half[index_i:], second_half[index_j:]))
+    return sorted_list
+
 
 
 numbers = [6, 3, 4, 1, 8, 7, 2, 5]
