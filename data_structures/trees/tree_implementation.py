@@ -166,7 +166,24 @@ class BinarySearchTree():
 
     
     def breadth_first_search_rec(self):
-        pass
+        return self._bfs_r(self.root)
+
+    
+'''
+    def _bfs_r(self, current_node):
+        bank = [current_node.value]
+        queue = []
+        if current_node.left:
+            queue.append(current_node.left)
+        if current_node.right:
+            queue.append(current_node.right)
+        if queue != []:
+            for node in queue:
+                bank.extend(self._bfs_r(node))
+        else:
+            return bank
+'''
+        
                 
 
     # PreOrder
@@ -201,3 +218,4 @@ print(tree)
 print('\n')
 print(tree.depth_first_search_rec())
 print(tree.breadth_first_search_iter())
+print(tree.breadth_first_search_rec())
