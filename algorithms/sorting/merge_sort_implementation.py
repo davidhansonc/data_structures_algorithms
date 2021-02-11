@@ -22,8 +22,8 @@ def compile_pieces(first_half, second_half):
         else:
             index_j += 1
             sorted_list.append(second_num)
-    sorted_list.extend(min(first_half[index_i:], second_half[index_j:]))
-    sorted_list.extend(max(first_half[index_i:], second_half[index_j:]))
+    sorted_list.extend(first_half[index_i:])
+    sorted_list.extend(second_half[index_j:])
     return sorted_list
 
 
