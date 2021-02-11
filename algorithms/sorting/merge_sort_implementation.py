@@ -2,7 +2,7 @@
 def merge_sort(number_list):
     full_length = len(number_list)
     if full_length > 1:
-        div_length = int(full_length / 2)
+        div_length = round(full_length / 2)
         first_half = merge_sort(number_list[:div_length])
         second_half = merge_sort(number_list[div_length:])
         return compile_pieces(first_half, second_half)
@@ -28,5 +28,5 @@ def compile_pieces(first_half, second_half):
 
 
 
-numbers = [6, 3, 4, 1, 8, 7, 2, 5]
+numbers = [6, 3, 4, 12, 1, 8, 7, 2, 5]
 print(merge_sort(numbers))
