@@ -1,3 +1,4 @@
+import random
 
 def merge_sort(number_list):
     full_length = len(number_list)
@@ -28,5 +29,6 @@ def compile_pieces(first_half, second_half):
 
 
 
-numbers = [6, 3, 4, 12, 1, 8, 7, 2, 5]
+# numbers = [6, 3, 4, 12, 1, 8, 7, 2, 5]
+numbers = [random.randint(0, 500) for i in range(10000)]
 print(merge_sort(numbers))

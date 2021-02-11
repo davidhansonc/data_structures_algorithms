@@ -3,6 +3,8 @@
 # @Date:   2021-01-27 15:58:39
 # @Last Modified by:   David Hanson
 # @Last Modified time: 2021-01-31 20:56:35
+import pdb
+
 class Node():
 
     def __init__(self, value):
@@ -31,21 +33,21 @@ class BinarySearchTree():
         if self.root == None:
             return 'Empty Tree'
         else:
-            return str(self.__traverse(self.root))
+            return str(self._traverse(self.root))
 
 
-    def __traverse(self, node):
+    def _traverse(self, node):
         tree = {
             'value': node.value
         }
-        if node.right:
-            tree['right node'] = self.__traverse(node.right)
-        else:
-            tree['right node'] = 'None'
         if node.left:
-            tree['left node'] = self.__traverse(node.left)
+            tree['left node'] = self._traverse(node.left)
         else:
             tree['left node'] = 'None'
+        if node.right:
+            tree['right node'] = self._traverse(node.right)
+        else:
+            tree['right node'] = 'None'
         return tree
 
 
@@ -60,19 +62,19 @@ class BinarySearchTree():
 
 
     def __traverse_to_insert(self, node_to_insert, origin_node):
-        traverse = origin_node
-        while traverse.left != node_to_insert and traverse.right != node_to_insert:
-            if node_to_insert.value > traverse.value:
-                if traverse.right == None:
-                    traverse.right = node_to_insert
+        current_node = origin_node
+        while current_node.left != node_to_insert and current_node.right != node_to_insert:
+            if node_to_insert.value > current_node.value:
+                if current_node.right == None:
+                    current_node.right = node_to_insert
                 else:
-                    traverse = traverse.right
-            elif node_to_insert.value < traverse.value:
-                if traverse.left == None:
-                    traverse.left = node_to_insert
+                    current_node = current_node.right
+            elif node_to_insert.value < current_node.value:
+                if current_node.left == None:
+                    current_node.left = node_to_insert
                 else:
-                    traverse = traverse.left
-            elif value == traverse.value:
+                    current_node = current_node.left
+            elif value == current_node.value:
                 return
 
 
@@ -84,24 +86,22 @@ class BinarySearchTree():
 
 
     def __traverse_to_lookup(self, value_to_add, origin_node):
-            traverse = origin_node
-            try:
-                while True:
-                    if value_to_add > traverse.value:
-                        traverse = traverse.right
-                    elif value_to_add < traverse.value:
-                        traverse  = traverse.left
-                    elif value_to_add == traverse.value:
-                        return traverse
-            except AttributeError:
-                return "item not found"
+            current_node = origin_node
+            while current_node:
+                if value_to_add > current_node.value:
+                    current_node = current_node.right
+                elif value_to_add < current_node.value:
+                    current_node  = current_node.left
+                elif value_to_add == current_node.value:
+                    return current_node
+            return "item not found"
 
     
     def remove(self, value):
         parent_node = None
         current_node = self.root
         last_direction_taken = ""
-        while True:
+        while current_node:
             # Deletes root node when there are no children
             if self.root.left == None and self.root.right == None:
                 self.root = None
@@ -118,7 +118,8 @@ class BinarySearchTree():
             # These statements deal with the removal once node is found
             elif value == current_node.value:
                 self.__node_removal(parent_node, current_node, last_direction_taken)
-                return
+                return current_node
+        return print("item not in tree")
 
 
     def __node_removal(self, parent_node, current_node, prev_direction):
@@ -146,20 +147,57 @@ class BinarySearchTree():
             special_node.left = current_node.left
             current_node.right.left = None
         return
+    
 
+    def breadth_first_search_iter(self):
+        node = self.root
+        queue = [self.root]
+        collection = []
+        while len(queue) > 0:
+            collection.append(node.value)
+            queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+            if len(queue) > 0:
+                node = queue[0]
+        return collection
+
+    
+    def breadth_first_search_rec(self):
+        pass
+                
+
+    # PreOrder
+    def depth_first_search_rec(self):
+        return self._dfs_r(self.root)
+    
+
+    def _dfs_r(self, current_node):
+        bank = [current_node.value]
+        if current_node.left:
+            bank.extend(self._dfs_r(current_node.left))
+        if current_node.right:
+            bank.extend(self._dfs_r(current_node.right))
+        return bank
 
 
 tree = BinarySearchTree()
 tree.insert(10)
-tree.insert(5)
 tree.insert(15)
-tree.insert(14)
+tree.insert(5)
+tree.insert(3)
+tree.insert(7)
+tree.insert(1)
+tree.insert(6)
+tree.insert(9)
+tree.insert(8)
 tree.insert(20)
+tree.insert(14)
 tree.insert(18)
 tree.insert(22)
-print(tree.lookup(14))
-print('\n')
 print(tree)
-tree.remove(15)
 print('\n')
-print(tree)
+print(tree.depth_first_search_rec())
+print(tree.breadth_first_search_iter())
