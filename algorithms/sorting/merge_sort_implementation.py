@@ -5,21 +5,13 @@ def merge_sort(number_list):
         div_length = int(full_length / 2)
         first_half = merge_sort(number_list[:div_length])
         second_half = merge_sort(number_list[div_length:])
-        return sort_return(first_half, second_half)
+        return compile_pieces(first_half, second_half)
     elif full_length == 1:
-        single_item = number_list[0]
-        return single_item
-    
-
-def sort_return(first, second):
-    if type(first) is not int and type(second) is not int:
-        sorted_list = []
-        return compile_pieces(sorted_list, first, second)
-    else:
-        return [min(first, second), max(first, second)]
+        return number_list
 
 
-def compile_pieces(sorted_list, first_half, second_half):
+def compile_pieces(first_half, second_half):
+    sorted_list = []
     index_i, index_j = 0, 0
     while index_i < len(first_half) and index_j < len(second_half):
         first_num = first_half[index_i]
@@ -37,6 +29,4 @@ def compile_pieces(sorted_list, first_half, second_half):
 
 
 numbers = [6, 3, 4, 1, 8, 7, 2, 5]
-# numbers = [6, 3, 4, 1]
-# numbers = [8, 7, 2, 5]
 print(merge_sort(numbers))
