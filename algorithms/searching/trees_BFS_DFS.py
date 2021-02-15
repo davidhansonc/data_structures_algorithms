@@ -149,6 +149,93 @@ class BinarySearchTree():
         return
     
 
+    def breadth_first_search_iter(self):
+        node = self.root
+        queue = [self.root]
+        collection = []
+        while len(queue) > 0:
+            collection.append(node.value)
+            queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+            if len(queue) > 0:
+                node = queue[0]
+        return collection
+
+    
+    def breadth_first_search_rec(self):
+        return self._bfs_r([self.root], [])
+
+    
+    def _bfs_r(self, queue, result_list):
+        node = queue[0]
+        result_list.append(node.value)
+        if node.left:
+            queue.append(node.left)
+        if node.right: 
+            queue.append(node.right)
+        queue.pop(0)
+        if len(queue) > 0:
+            return self._bfs_r(queue, result_list)
+        else:
+            return result_list
+                
+
+    def dfs_inorder_rec(self):
+        return self._dfs_inorder_traversal(self.root, [])
+
+    
+    def _dfs_inorder_traversal(self, node, result_list):
+        if node.left:
+            self._dfs_inorder_traversal(node.left, result_list)
+        result_list.append(node.value)
+        if node.right:
+            self._dfs_inorder_traversal(node.right, result_list)
+        return result_list
+    
+
+    def dfs_preorder_rec(self):
+        return self._dfs_preorder_traversal(self.root, [])
+    
+
+    def _dfs_preorder_traversal(self, node, result_list):
+        result_list.append(node.value)
+        if node.left:
+            self._dfs_preorder_traversal(node.left, result_list)
+        if node.right:
+            self._dfs_preorder_traversal(node.right, result_list)
+        return result_list
+    
+
+    def dfs_postorder_rec(self):
+        return self._dfs_postorder_traversal(self.root, [])
+    
+
+    def _dfs_postorder_traversal(self, node, result_list):
+        if node.left:
+            self._dfs_postorder_traversal(node.left, result_list)
+        if node.right:
+            self._dfs_postorder_traversal(node.right, result_list)
+        result_list.append(node.value)
+        return result_list
+                
+
+    def get_leaves(self):
+        return self._leaves_r(self.root, [])
+
+    
+    def _leaves_r(self, node, leaves):
+        if node.left:
+            self._leaves_r(node.left, leaves)
+        else:
+            leaves.append(node.value)
+        if node.right:
+            self._leaves_r(node.right, leaves)
+        return leaves
+
+
 tree = BinarySearchTree()
 tree.insert(10)
 tree.insert(15)
@@ -165,3 +252,10 @@ tree.insert(14)
 tree.insert(18)
 tree.insert(22)
 print(tree)
+print('\n')
+print(tree.dfs_inorder_rec())
+print(tree.dfs_preorder_rec())
+print(tree.dfs_postorder_rec())
+print(tree.breadth_first_search_iter())
+print(tree.breadth_first_search_rec())
+print(tree.get_leaves())
